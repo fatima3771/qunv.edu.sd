@@ -1,0 +1,1 @@
+[26-Nov-2017 15:02:01 Africa/Khartoum] PHP Fatal error:  Class 'App\Page' not found in /home/mcoorgsd/public_html/resources/views/mco/layouts/master.blade.php on line 98
