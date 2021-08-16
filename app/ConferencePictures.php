@@ -27,9 +27,9 @@ class ConferencePictures extends Model {
 	//protected $primaryKey='newsNo';
 
 	public function getPicture(){ 
-		if(isset($this->url)){
-			$imagePathForCheck = public_path().'/includes/conferences/'.$this->conference->id."/pictures/".$this->url;
-			$imagePath = request()->root().'/public/includes/conferences/'.$this->conference->id."/pictures/".$this->url;
+		if(isset($this->picture)){
+			$imagePathForCheck = public_path().'/includes/conferences/'.$this->conference->id."/pictures/".$this->picture;
+			$imagePath = request()->root().'/public/includes/conferences/'.$this->conference->id."/pictures/".$this->picture;
 			// dd($imagePath);
 			if(file_exists($imagePathForCheck)){
 				return $imagePath;
