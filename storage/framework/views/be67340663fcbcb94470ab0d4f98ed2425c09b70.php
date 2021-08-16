@@ -1,34 +1,25 @@
-@extends('mtCPanel.layouts.master')
+<?php $__env->startSection('php'); ?>
+    <?php 
+		$page = 'conferences';
+        $folder = 'public/includes/conferences';
+        $pic_dimensions =  " أبعاد الصورة (العرض:1000px - الطول:300px)";
+     ?>
+<?php $__env->stopSection(); ?>
 
-@section('php')
-    @php        
-        $page_title = "conferences_pictures";
-        $parentPage_title = "conferences";
-        $childPage = "pictures";
-        $parentPage = "conferences";
-		$page = $parentPage.".".$childPage;
-		$pic_dimensions =  " أبعاد الصورة (العرض:500px - الطول:500px)";
-        $parent = $data->conference;
-		$folder = 'public/includes/conferences/'.$parent->id.'/pictures';
-    @endphp
-@endsection
+<?php $__env->startSection('breadcrumb'); ?>
+		<li>
+			<i class="fa fa-home"></i>
+			<a href="<?php echo e(request()->root()); ?>/mtCPanel"><?php echo app('translator')->getFromJson('admin.cpanel'); ?></a>
+		</li>
+		<li><a href="<?php echo e(mtGetRoute('index','mtCPanel.'.$page)); ?>"><?php echo app('translator')->getFromJson('admin.'.$page); ?></a></li>
+		<li class="active"><?php echo app('translator')->getFromJson('admin.edit'); ?></li>
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
-        <li>
-            <i class="fa fa-home"></i>
-            <a href="{{  request()->root() }}/mtCPanel">@lang('admin.cpanel')</a>
-        </li>
-        <li> <a href="{{ mtGetRoute('index','mtCPanel.'.$parentPage) }}">@lang('admin.'.$parentPage_title)</a> </li>
-        <li> <a href="{{ mtGetRoute('show','mtCPanel.'.$parentPage,$parent->id) }}">{{ $parent->title }}</a> </li>
-        <li> <a href="{{ mtGetRoute('index','mtCPanel.'.$page,$parent->id) }}">@lang('admin.'.$page_title)</a> </li>
-        <li class="active">{{ $data->title }}</li>
-@endsection
+<?php $__env->startSection('header-title'); ?>
+	<?php echo app('translator')->getFromJson('admin.'.$page); ?>
+<?php $__env->stopSection(); ?>
 
-@section('header-title')
-	@lang('admin.'.$page_title)
-@endsection
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
 .dz-message{
 	text-align: center;
@@ -45,7 +36,7 @@
 		<div id="panel-1" class="panel panel-default">
 			<div class="panel-heading">
 				<span class="title elipsis">
-					<strong>@lang('admin.'.$page_title) - @lang('admin.edit')</strong> <!-- panel title -->
+					<strong><?php echo app('translator')->getFromJson('admin.'.$page); ?> - <?php echo app('translator')->getFromJson('admin.edit'); ?></strong> <!-- panel title -->
 				</span>
 
 				<!-- right options -->
@@ -59,39 +50,49 @@
 
 			<!-- panel content -->
 			<div class="panel-body">
-				<form action="{{ mtGetRoute('update','mtCPanel.'.$page, $parent->id, $data->id) }}" method="post" enctype="multipart/form-data" data-success="Sent! Thank you!" data-toastr-position="top-right">
+				<form action="<?php echo e(mtGetRoute('update','mtCPanel.'.$page, $data->id)); ?>" method="post" enctype="multipart/form-data" data-success="Sent! Thank you!" data-toastr-position="top-right">
 					<input name="_method" type="hidden" value="PUT">
-					{{ csrf_field() }}
+					<?php echo e(csrf_field()); ?>
+
                     <fieldset>
                         <div class="row">
                             <div class="col-md-8">
+								<?php echo mtTextField(__('admin.title'),'title',$data->title,$errors,['isFirst'=>true]); ?>
 
-                                <div class="form-group">
-                                    <div class="col-md-12 col-sm-12">
-                                        <label>اللغة</label>
-                                        <select name="lang" class="form-control pointer required">
-                                            <option value="1" {{ ($data->lang == 1)? 'selected' : '' }}>العربية</option>
-                                            <option value="2" {{ ($data->lang == 2)? 'selected' : '' }}>English</option>
-                                        </select>
-                                    </div>
-                                </div>
+								<?php echo mtTextField(__('admin.titleEn'),'titleEn',$data->titleEn,$errors); ?>
 
-								{!! mtTextField(__('admin.caption'),'caption',$data->caption,$errors,['isFirst'=>true]) !!}
-								{!! mtTextField(__('admin.url'),'url',$data->url,$errors) !!}
+								<?php echo mtTextAreaField(__('admin.details'),'txt',$data->txt,$errors); ?>
 
-								
+								<?php echo mtTextAreaField(__('admin.detailsEn'),'txtEn',$data->txtEn,$errors); ?>
 
-								
+								<?php echo mtTextField(__('admin.country'),'country',$data->country,$errors); ?>
+
+								<?php echo mtTextField(__('admin.countryEn'),'countryEn',$data->countryEn,$errors); ?>
+
+								<?php echo mtTextField(__('admin.city'),'city',$data->city,$errors); ?>
+
+								<?php echo mtTextField(__('admin.cityEn'),'cityEn',$data->cityEn,$errors); ?>
+
+								<?php echo mtTextField(__('admin.address'),'address',$data->address,$errors); ?>
+
+								<?php echo mtTextField(__('admin.addressEn'),'addressEn',$data->addressEn,$errors); ?>
+
+								<?php echo mtTextField(__('admin.start_at'),'start_at',$data->start_at,$errors,['type'=>'date']); ?>
+
+								<?php echo mtTextField(__('admin.end_at'),'end_at',$data->end_at,$errors,['type'=>'date']); ?>
+
+								<?php echo mtTextField(__('admin.dataEntry'),'dataEntry',$data->dataEntry,$errors); ?>
+
 
                             </div>
                             
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="col-md-12 col-sm-12">
-                                        <label>@lang('admin.picture')</label>
+                                        <label><?php echo app('translator')->getFromJson('admin.picture'); ?></label>
                                         <div action="" method="post" class="dropzone" id="my-dropzone">
-                                            <input type="hidden" id="picture" name="picture" value="{{ $data->picture }}">
-                                            <h4>أفلت الملفات هنا، أو إضغط هنا @if(isset($pic_dimensions))<br> <small>{{ $pic_dimensions }}</small>@endif</h4>
+                                            <input type="hidden" id="picture" name="picture" value="<?php echo e($data->picture); ?>">
+                                            <h4>أفلت الملفات هنا، أو إضغط هنا <?php if(isset($pic_dimensions)): ?><br> <small><?php echo e($pic_dimensions); ?></small><?php endif; ?></h4>
                                             <div class="dz-message" data-dz-message></div>
                                         </div>
                                     </div>
@@ -103,7 +104,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<button type="submit" class="btn btn-3d btn-teal btn-xlg btn-block margin-top-30">
-								@lang('admin.edit')
+								<?php echo app('translator')->getFromJson('admin.edit'); ?>
 							</button>
 						</div>
 					</div>
@@ -112,28 +113,25 @@
 			</div>
 		</div>
     </div>
-@stop
-@section('scripts')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('scripts'); ?>
 	<script type="text/javascript">
 		loadScript(plugin_path + 'dropzone/dropzone.js', function() {
 
 			// Dropzone.autoDiscover = false;
 
-			var token = "{!! csrf_token() !!}";
-            var id = parseInt("{{ $data->id }}");
-            var uplaod_url = "{{ route('mtCPanel.dropzone.upload') }}";
-            var get_files_url = "{{ route('mtCPanel.'.$page.'.dropzone') }}";
-            var remove_url = "{{ route('mtCPanel.'.$page.'.dropzone.remove') }}";
-            var folder = "{{ $folder }}";
-			var prefix = "{{ date('Y-m-d_H-m-i') }}_";
-
+			var token = "<?php echo csrf_token(); ?>";
+            var id = parseInt("<?php echo e($data->id); ?>");
+            var uplaod_url = "<?php echo e(route('mtCPanel.dropzone.upload')); ?>";
+            var get_files_url = "<?php echo e(route('mtCPanel.'.$page.'.dropzone')); ?>";
+            var remove_url = "<?php echo e(route('mtCPanel.'.$page.'.dropzone.remove')); ?>";
+            var folder = "<?php echo e($folder); ?>";
 			
 			Dropzone.options.myDropzone = {
 				url: uplaod_url, //----------------- Upload URL --------------------------------
 				params: {
 					"_token": token,
-					"folder": folder,
-					"prefix": prefix
+					"folder": folder
 				},
 				paramName: "file", // The name that will be used to transfer the file
 				maxFilesize: 10, // MB
@@ -152,7 +150,8 @@
 							name: name,
 							id: 255
 						},
-						sucess: function(data){
+						success: function(data){
+							$("#picture").val('');
 							console.log('success: ' + data);
 							myDropzone.options.maxFiles = myDropzone.options.maxFiles + 1;
 						}
@@ -212,8 +211,9 @@
 		});
 	</script>
     <script>
-        @if(old('updated'))
+        <?php if(old('updated')): ?>
             _toastr("تم التعديل بنجاح","top-center","success",false);
-        @endif
+        <?php endif; ?>
     </script>
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('mtCPanel.layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

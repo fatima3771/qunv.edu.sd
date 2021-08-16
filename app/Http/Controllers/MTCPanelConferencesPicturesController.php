@@ -40,7 +40,7 @@ class MTCPanelConferencesPicturesController extends Controller
         //     $model = $model->whereRaw('id IN ('.$privText.')');
         // }
         
-        $model = $model->where('conf_id', $parent_id);
+        $model = $model->where('conference_id', $parent_id);
         $parent = $this->parentModel->find($parent_id);
         $data = $model->orderBy('id','desc')->paginate($this->paginate);
         
@@ -74,7 +74,7 @@ class MTCPanelConferencesPicturesController extends Controller
         $validator = Validator::make($request->all(), $rules)->validate();
         // dd($request->all());
         $data = $request->all();
-        $data['conf_id'] = $parent_id;
+        $data['conference_id'] = $parent_id;
 
         $data = $this->model->create( $data );
         return redirect()->route($this->view.'.index',['parent_id'=>$parent_id])->withInput(['added' => true, 'id' => $data->id]);

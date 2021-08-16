@@ -2,12 +2,12 @@
 
 @section('php')
     @php        
-        $page_title = "colleges_slider";
-        $parentPage_title = "colleges";
-        $childPage = "slider";
-        $parentPage = "colleges";
+        $page_title = "conferences_pictures";
+        $parentPage_title = "conferences";
+        $childPage = "pictures";
+        $parentPage = "conferences";
         $page = $parentPage.".".$childPage;
-        $parent = $data->college;
+        $parent = $data->conference;
     @endphp
 @endsection
 
@@ -67,21 +67,11 @@
                                 <td><img src='{{ $data->getPicture() }}' class="thumbnail img-responsive" /></td>
                             </tr>
                             <tr>
-                                <th>@lang('admin.caption1')</th>
-                                <td>{{ $data->caption1 }}</td>
+                                <th>@lang('admin.caption')</th>
+                                <td>{{ $data->caption }}</td>
                             </tr>
-                            <tr>
-                                <th>@lang('admin.caption2')</th>
-                                <td>{{ $data->caption2 }}</td>
-                            </tr>
-                            <tr>
-                                <th>@lang('admin.start_date')</th>
-                                <td>{{ $data->start_at }}</td>
-                            </tr>
-                            <tr>
-                                <th>@lang('admin.end_date')</th>
-                                <td>{{ $data->end_at }}</td>
-                            </tr>
+                            
+                            
 						</tbody>
 						<tfoot>
 							<tr>

@@ -75,10 +75,10 @@
 									</div>
 								</div>
 
-								{!! mtTextField(__('admin.header'),'header',old('header'),$errors,['isFirst'=>true]) !!}
-								<label>@lang('admin.details')</label>
-                                 <textarea name="details" class="summernote form-control" data-height="200" data-lang="en-US">
-                                       {!! old('details') !!}
+								
+								<label>@lang('admin.caption')</label>
+                                 <textarea name="caption" class="summernote form-control" data-height="200" data-lang="en-US">
+                                       {!! old('caption') !!}
                                 </textarea>
 								{!! mtTextField(__('admin.url'),'url',old('url'),$errors) !!}
 

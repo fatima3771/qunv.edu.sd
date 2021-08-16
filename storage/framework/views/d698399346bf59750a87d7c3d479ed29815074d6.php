@@ -74,11 +74,10 @@
 									</div>
 								</div>
 
-								<?php echo mtTextField(__('admin.header'),'header',old('header'),$errors,['isFirst'=>true]); ?>
-
-								<label><?php echo app('translator')->getFromJson('admin.details'); ?></label>
-                                 <textarea name="details" class="summernote form-control" data-height="200" data-lang="en-US">
-                                       <?php echo old('details'); ?>
+								
+								<label><?php echo app('translator')->getFromJson('admin.caption'); ?></label>
+                                 <textarea name="caption" class="summernote form-control" data-height="200" data-lang="en-US">
+                                       <?php echo old('caption'); ?>
 
                                 </textarea>
 								<?php echo mtTextField(__('admin.url'),'url',old('url'),$errors); ?>
